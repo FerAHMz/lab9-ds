@@ -4,6 +4,77 @@
 % ---------- Fernando Hernández ----------
 \subsection{Estacionalidad y golpe de la pandemia}
 
+\paragraph{Formato.} El cuadrante es una tabla visual de 7 series por 4 preguntas.
+Cada columna lleva una barra horizontal por serie, ordenada de mayor a menor, con
+la cifra escrita al final de la barra. La serie que responde la pregunta va en
+color de acento y las demás en gris. Elegimos barras porque son la forma más
+precisa de comparar magnitudes de una misma variable entre categorías: el ojo
+compara longitudes desde una base común mejor que áreas, ángulos o colores. Cada
+pregunta tiene su propia escala, así que las columnas no se comparan entre sí, y
+eso se indica en el encabezado de cada una.
+
+\paragraph{¿Cuál serie presenta mayor estacionalidad?} Usamos la fuerza
+estacional de Hyndman, que mide qué parte de la variación de la serie se explica
+por el calendario (0 = nada, 1 = todo). Se calcula con una descomposición STL
+robusta del logaritmo de la serie entre 2009 y 2019, para que los ceros de 2020
+no distorsionen el patrón. En la infografía se rotula como ``qué tan predecible
+es su calendario''.
+
+\begin{center}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Serie & Fuerza estacional & Mes pico & Pico / valle \\
+\midrule
+\textbf{América del Norte} & \textbf{0.88} & Jul & 2.07 \\
+Europa                     & 0.88 & Nov & 1.87 \\
+La Aurora                  & 0.87 & Dic & 1.58 \\
+América del Centro         & 0.81 & Dic & 1.91 \\
+Total                      & 0.80 & Dic & 1.67 \\
+San Cristóbal              & 0.71 & Dic & 2.22 \\
+Valle Nuevo                & 0.42 & Dic & 2.05 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\emph{Respuesta:} América del Norte (0.882), prácticamente empatada con Europa
+(0.880). La infografía lo dice así, ``Norteamérica y Europa'', porque una
+diferencia de 0.002 no justifica nombrar a una sola. La columna pico/valle
+muestra un matiz que vale la pena explicar al directivo: San Cristóbal y Valle
+Nuevo tienen los picos más altos en proporción, pero su calendario es irregular
+(fuerza baja). Tienen temporadas fuertes pero difíciles de anticipar, mientras
+que los mercados de larga distancia repiten su patrón casi igual cada año.
+
+\paragraph{¿Cuál fue la más golpeada por la pandemia?} Medimos la caída
+acumulada de 2020 y 2021 juntos frente a dos años de 2019. Usar solo 2020 castiga
+igual a todas las series, porque el cierre fue general; sumar 2021 captura
+también qué tan lenta fue la reapertura de cada una.
+
+\begin{center}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Serie & Caída 2020 & Caída 2020--2021 & 2025 vs. 2019 \\
+\midrule
+\textbf{Valle Nuevo} & \textbf{$-$81\%} & \textbf{$-$84\%} & 72\% \\
+San Cristóbal        & $-$73\% & $-$82\% & 90\% \\
+América del Centro   & $-$74\% & $-$76\% & 66\%$^{*}$ \\
+Total                & $-$74\% & $-$74\% & 81\%$^{*}$ \\
+Europa               & $-$72\% & $-$73\% & 125\% \\
+América del Norte    & $-$74\% & $-$65\% & 139\% \\
+La Aurora            & $-$73\% & $-$63\% & 80\% \\
+\bottomrule
+\end{tabular}
+
+{\footnotesize $^{*}$ Afectadas por el cambio de metodología de 2023, que deja de
+contar a los residentes de Guatemala.}
+\end{center}
+
+\emph{Respuesta:} Valle Nuevo, la frontera terrestre con El Salvador. Es la que
+más cae con las dos medidas. Las dos fronteras terrestres encabezan la lista
+porque siguieron casi vacías en 2021, mientras que La Aurora y América del Norte,
+que dependen de vuelos, se recuperaron antes. Para la infografía es un hallazgo
+que conecta con las recomendaciones: la vía terrestre es la más vulnerable a un
+cierre.
+
 % ---------- Fernando Rueda ----------
 \subsection{Tendencia de crecimiento y volatilidad}
 

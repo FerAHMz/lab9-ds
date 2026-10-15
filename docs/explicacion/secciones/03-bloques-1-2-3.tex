@@ -1,3 +1,160 @@
 % Responsable: Fernando Hernández
 \section{Bloques 1 a 3: titular, panorama histórico y estacionalidad}
 
+Todas las cifras de esta sección salen de \texttt{src/metricas\_estacionalidad\_pandemia.py}
+y \texttt{src/kpis\_titular.py}, que leen las series del Laboratorio 1 sin
+modificarlas.
+
+\subsection{Una advertencia antes de elegir cifras}
+
+La base de migración cambia de metodología en 2023. Desde ese año deja de contar
+a los residentes de Guatemala que vuelven al país (1.42 millones de visitantes en
+2022) y excluye a los compradores fronterizos frecuentes. Por eso, comparar el
+total de 2025 con el de 2019 da una ``recuperación'' del 81\%, y una parte de esa
+brecha no se debe a que haya menos turismo sino a que se cuenta distinto.
+
+Para que la infografía no mienta tomamos dos decisiones:
+\begin{enumerate*}[label=(\roman*)]
+  \item las comparaciones de recuperación se hacen con América del Norte y
+  Europa, cuyas cifras no incluyen residentes guatemaltecos, y
+  \item el quiebre de 2023 se marca de forma visible en la línea de tiempo.
+\end{enumerate*}
+
+\subsection{Bloque 1: titular y tarjetas KPI}
+
+\paragraph{Titular.} Proponemos:
+
+\begin{center}
+{\large\bfseries Guatemala recupera a sus viajeros: los mercados lejanos ya superan 2019}\\[0.3em]
+{\itshape Radiografía de 17 años de flujo migratorio (2009--2026) y lo que anticipan los modelos}
+\end{center}
+
+El titular afirma un hallazgo en lugar de nombrar un tema, que es lo que pide el
+enunciado. Elegimos este hallazgo porque es el más útil para INGUAT y el que mejor
+aguanta la revisión. La pandemia es el evento más dramático de la serie, pero ya
+pasó y el directivo la conoce. Lo que no es obvio, y sí cambia decisiones, es que
+los mercados de larga distancia no solo volvieron sino que crecieron. El
+subtítulo pone el periodo y anuncia que la página también mira hacia adelante.
+
+\paragraph{Tarjetas KPI.} Son cuatro, cada una con la cifra en el tamaño más
+grande de la página y una línea de contexto debajo:
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+Cifra & Línea de contexto y motivo \\
+\midrule
+\textbf{4.13 M} & Visitantes en 2019, el año más alto. Le da al lector la escala del
+fenómeno y es la referencia de todo lo que sigue. \\
+\textbf{$-$74\%} & Caída en 2020 frente a 2019. Es el evento que explica la forma de
+la línea de tiempo; se muestra en color de acento. \\
+\textbf{+39\%} & América del Norte en 2025 frente a 2019 (Europa, +25\%). Respalda
+el titular con un mercado que la nueva metodología no infla: al excluir a los
+compradores fronterizos frecuentes, si acaso lo reduce. \\
+\textbf{+35\%} & Visitantes de diciembre sobre un mes típico. Adelanta el bloque 3 y
+es la cifra más directa para planificar operativos y campañas. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Las cuatro siguen el mismo orden que la página: escala, golpe, recuperación y
+calendario. Descartamos el total de 2025 frente a 2019 por la advertencia
+anterior, y descartamos cifras de modelos (por ejemplo, el error del pronóstico)
+porque el lector todavía no tiene contexto para leerlas en la primera franja.
+
+Las tarjetas son números sueltos y no mini-gráficos. Un número grande con una
+línea de contexto se lee en un segundo; un \emph{sparkline} obliga a interpretar
+una forma sin ejes, y la línea de tiempo del bloque 2, justo debajo, ya hace ese
+trabajo.
+
+\subsection{Bloque 2: panorama histórico 2009--2026}
+
+\paragraph{Tipo de dato y gráfico.} Es una variable cuantitativa continua medida
+en 210 meses consecutivos. Para mostrar la evolución de una cantidad en el tiempo
+el gráfico adecuado es el de líneas: la pendiente se lee como crecimiento y los
+quiebres saltan a la vista sin explicarlos. Descartamos las barras mensuales,
+porque 210 barras forman una textura en lugar de una forma, y el área apilada por
+región, porque solo la serie de abajo tendría una base plana contra la cual
+compararla.
+
+\paragraph{Qué se grafica.} El total mensual del país en una línea gris oscura,
+con una media móvil de 12 meses en color principal superpuesta. La serie mensual
+cruda muestra el vaivén estacional; la media móvil quita ese vaivén y deja ver la
+tendencia, que es lo que el directivo necesita en este bloque. El eje vertical
+empieza en cero: en una serie que cae 74\% truncar el eje exagera o esconde
+la caída según dónde se corte.
+
+\paragraph{Anotaciones.} Se anotan solo eventos verificados en los datos o en la
+documentación de la fuente, con una etiqueta directa junto a la línea y no en
+una leyenda aparte:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{2009--2019, crecimiento sostenido:} de 1.88 a 4.13 millones de
+  visitantes por año. Diciembre de 2019 es el mes más alto de toda la serie
+  (449 mil).
+  \item \textbf{Abril--agosto 2020, cierre de fronteras por COVID-19:} cinco meses
+  en cero. Es el único tramo en color de acento.
+  \item \textbf{2021--2022, reapertura escalonada:} el regreso es gradual y llega
+  a su punto más alto en diciembre de 2022.
+  \item \textbf{2023, cambio de metodología:} una franja sombreada con la nota
+  ``Desde aquí se cuenta distinto: los niveles no se comparan directamente con
+  años anteriores''. Sin esta marca, el lector leería el escalón de 2023 como una
+  segunda crisis.
+  \item \textbf{Enero--junio 2026:} el último tramo va con línea punteada y la nota
+  ``Datos parciales'', para que nadie lea el semestre como un año completo.
+\end{itemize}
+
+No anotamos eventos que no podamos respaldar con los datos, aunque parezcan
+plausibles. Una anotación sin evidencia sería una afirmación causal que el
+laboratorio no demostró.
+
+\subsection{Bloque 3: estacionalidad y fechas que marcan la pauta}
+
+\paragraph{Tipo de dato y gráfico.} Aquí el dato tiene dos dimensiones de tiempo:
+mes del año (cíclica, 12 categorías ordenadas) y año (ordinal, 18 valores).
+Usamos un \textbf{mapa de calor} con los meses en las columnas, los años en las
+filas y el número de visitantes como intensidad de un solo tono. En una sola
+figura se ven tres cosas: las columnas oscuras son la estacionalidad (diciembre,
+marzo--abril y julio), el oscurecimiento hacia abajo es la tendencia, y la franja
+clara de 2020 es la pandemia.
+
+La alternativa era superponer una línea por año sobre los 12 meses. Con 18 años
+el resultado es un ``espagueti'' en el que no se distingue ninguno; y si se
+dejan pocos años, se pierde la idea de que el patrón se repite. El mapa de calor
+tiene una limitación: el color no permite leer valores exactos. Por eso los meses
+pico llevan su cifra escrita encima de la columna.
+
+La escala de color es secuencial de un solo tono (de claro a oscuro), porque la
+variable es una cantidad que solo crece en un sentido. Una escala divergente o de
+arcoíris inventaría un punto medio que no existe.
+
+\paragraph{Fechas clave.} Sobre las columnas del mapa se marcan las fechas que
+coinciden con los picos del perfil mensual de 2009--2019
+(\texttt{outputs/perfil\_mensual.csv}). El índice compara cada mes con un mes
+típico del mismo año: 1.35 significa 35\% más visitantes de lo normal.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}llX@{}}
+\toprule
+Mes & Índice (total) & Lo que coincide con el pico \\
+\midrule
+Diciembre      & 1.35 & Fin de año y aguinaldo en Centroamérica. El pico más fuerte en
+                         cinco de las siete series (América del Centro, 1.41;
+                         San Cristóbal, 1.50). \\
+Marzo--abril   & 1.07 / 1.05 & Semana Santa, que cae en uno u otro mes según el año, por eso
+                         el pico se reparte entre los dos. \\
+Julio          & 1.08 & Vacaciones de verano en Estados Unidos y pago del bono 14.
+                         América del Norte tiene aquí su pico (1.32). \\
+Noviembre      & 1.05 & Temporada de invierno europeo: Europa sube a 1.25 en noviembre
+                         y se mantiene alta hasta marzo. \\
+\midrule
+Febrero, mayo, septiembre & 0.81 / 0.87 / 0.83 & Meses valle. Febrero o septiembre es el mes más bajo
+                         en seis de las siete series; septiembre coincide con la temporada de lluvia. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+En la infografía estas marcas se rotulan como ``coincide con'' y no como
+``causado por''. El laboratorio midió el patrón, no su causa; las fechas sirven
+para que el directivo reconozca el calendario, no para afirmar un efecto que no
+probamos.
