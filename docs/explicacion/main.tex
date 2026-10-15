@@ -1,0 +1,59 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=1.9cm]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=black, urlcolor=blue}
+
+\graphicspath{{figuras/}{../../outputs/}}
+
+% Datos de la portada
+\newcommand{\seccion}{40}
+\newcommand{\catedratico}{NOMBRE DEL CATEDRÁTICO}
+
+\begin{document}
+
+%========================= PORTADA =========================
+\begin{titlepage}
+\centering
+
+{\bfseries UNIVERSIDAD DEL VALLE DE GUATEMALA}\\[0.3em]
+CC3084 - Data Science\\[0.2em]
+Sección \seccion\\[0.2em]
+\catedratico\\[2.5em]
+
+\includegraphics[width=0.32\textwidth]{Uvg_logo.jpg}\\[2.5em]
+
+{\LARGE Laboratorio 9. Visualización Estática}\\[0.4em]
+{\Large Documento de decisiones de diseño de la infografía}\\[2em]
+
+{\large Reporte grupal}\\[2em]
+
+Fernando Andree Hernández Martínez \quad 23645\\[0.3em]
+Fernando José Rueda Rodas \quad 23748\\[0.3em]
+
+\vfill
+
+{\bfseries GUATEMALA}\\[0.2em]
+{\bfseries 15 de octubre de 2026}
+
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\input{secciones/01-introduccion}
+\input{secciones/02-recorrido-boceto}
+\input{secciones/03-bloques-1-2-3}
+\input{secciones/04-paleta-tipografia}
+\input{secciones/05-bloques-4-5}
+\input{secciones/06-cuadrante}
+
+\end{document}
