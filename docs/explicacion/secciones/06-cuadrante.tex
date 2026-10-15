@@ -78,3 +78,91 @@ cierre.
 % ---------- Fernando Rueda ----------
 \subsection{Tendencia de crecimiento y volatilidad}
 
+
+Las cifras de esta subsección salen de \texttt{src/metricas\_tendencia\_volatilidad.py}, que
+usa las mismas series y el mismo tramo de referencia, 2009 a 2019, que las métricas de
+estacionalidad, y de \texttt{src/extraer\_residencia.py}, que separa a los residentes de
+Guatemala de los extranjeros a partir de la base limpia del Laboratorio 1. Las dos columnas se
+grafican con el formato descrito arriba, barras ordenadas con la serie que responde en naranja.
+
+\paragraph{¿Cuál serie presenta mayor tendencia de crecimiento?} Medimos el crecimiento anual
+compuesto, la tasa constante que lleva del valor de un año al de otro, porque no depende de
+cuántos años se miren y se lee como un rendimiento anual. El periodo natural es de 2009 a 2025,
+el primer y el último año completos, pero en ese tramo caben la pandemia y el cambio de
+metodología de 2023, que dejó de contar a los residentes de Guatemala. Al revisarlo encontramos
+que ese cambio no solo afecta al total y a América del Centro, también a las tres fronteras,
+donde los residentes guatemaltecos eran entre el 33\% y el 46\% de los visitantes de 2019 y pasan
+a cero desde 2023. Por eso calculamos la tasa de tres formas y la respuesta se sostiene solo si
+coincide en las tres.
+
+\begin{center}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Serie & 2009--2019 & 2009--2025 & Solo extranjeros 2009--2025 \\
+\midrule
+\textbf{San Cristóbal} & \textbf{12.9\%} & \textbf{7.2\%} & \textbf{10.1\%} \\
+América del Centro     & 9.8\%  & 3.3\% & 8.1\% \\
+Total                  & 8.2\%  & 3.7\% & 6.5\% \\
+La Aurora              & 4.7\%  & 1.5\% & 5.7\% \\
+Valle Nuevo            & 9.7\%  & 3.8\% & 5.0\% \\
+América del Norte      & 3.8\%  & 4.5\% & 4.5\% \\
+Europa                 & 2.3\%  & 2.9\% & 2.9\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\emph{Respuesta.} San Cristóbal, la frontera terrestre con El Salvador. Encabeza las tres
+medidas, antes de la pandemia creció 12.9\% al año y se multiplicó por 3.4, y contando solo
+extranjeros sigue creciendo 10.1\% anual hasta 2025. En la infografía se usa la tasa de solo
+extranjeros, porque es la única que compara 2009 con 2025 sin el quiebre metodológico, y se
+rotula como ``cuánto crece cada año''. La tabla deja dos lecturas útiles para el directivo. Los
+mercados de larga distancia, Norte y Europa, crecen más lento pero sin altibajos, sus tres tasas
+casi coinciden. Y La Aurora parece estancada, 1.5\% anual, solo porque casi la mitad de sus
+pasajeros eran guatemaltecos que regresaban, sin ellos crece 5.7\% al año.
+
+\paragraph{¿Cuál exhibe mayor volatilidad?} Una serie con una tendencia fuerte o con temporadas
+muy marcadas tiene mucha dispersión aunque sea perfectamente predecible, así que el coeficiente
+de variación de la serie cruda mezcla volatilidad con crecimiento y estacionalidad. Para medir
+solo lo impredecible usamos el coeficiente de variación de los residuos, la desviación estándar
+del componente irregular de la misma descomposición STL robusta de 2009 a 2019, dividida entre
+el nivel medio de la serie. Se lee como ``en un mes cualquiera, la serie se aparta de lo esperado
+en tal porcentaje de su nivel''.
+
+\begin{center}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Serie & CV de los residuos & CV de la serie cruda & Cambio mensual típico \\
+\midrule
+\textbf{San Cristóbal} & \textbf{0.24} & \textbf{0.52} & \textbf{0.35} \\
+Valle Nuevo            & 0.17 & 0.40 & 0.37 \\
+América del Centro     & 0.08 & 0.36 & 0.22 \\
+Europa                 & 0.08 & 0.25 & 0.28 \\
+América del Norte      & 0.08 & 0.24 & 0.27 \\
+Total                  & 0.07 & 0.31 & 0.20 \\
+La Aurora              & 0.05 & 0.22 & 0.17 \\
+\bottomrule
+\end{tabular}
+
+{\footnotesize El cambio mensual típico es la desviación estándar de la diferencia logarítmica
+mes a mes, una medida complementaria.}
+\end{center}
+
+\emph{Respuesta.} San Cristóbal otra vez, con un componente irregular del 24\% de su nivel, tres
+veces el de las regiones y casi cinco veces el de La Aurora. Las dos fronteras terrestres son las
+más volátiles, Valle Nuevo la iguala en el cambio mes a mes, mientras que la vía aérea es la más
+estable. Sin quitar tendencia y estacionalidad, América del Centro habría quedado como la tercera
+más volátil por su gran crecimiento, y con los residuos queda junto a los mercados regulares, que
+es la lectura correcta.
+
+\paragraph{Lectura conjunta para la infografía.} San Cristóbal responde dos de las cuatro
+preguntas, crece más que ninguna y también es la menos predecible. Para INGUAT eso significa una
+oportunidad con riesgo, un mercado terrestre en expansión que requiere capacidad flexible en
+lugar de planes fijos, y es la base de la tercera recomendación del bloque 5.
+
+\paragraph{Una advertencia para la columna de recuperación.} El mismo cambio metodológico que
+afecta a las tasas de crecimiento afecta a la recuperación de 2025 frente a 2019 de la
+subsección anterior. Contando solo extranjeros, los visitantes de 2025 equivalen al 159\% de
+2019 en San Cristóbal, al 148\% en La Aurora, al 139\% en América del Centro y al 107\% en Valle
+Nuevo, y el total llega al 138\%. Valle Nuevo sigue siendo la frontera más rezagada, pero ya
+superó su nivel previo a la pandemia, así que en la infografía esa columna se calcula con
+extranjeros o se marca con la misma nota que el total.
