@@ -1,0 +1,8 @@
+serie,fuerza_estacional,mes_pico,indice_pico,mes_valle,indice_valle,amplitud_pico_valle,caida_2020_pct,caida_2020_2021_pct,recuperacion_2025_pct
+Total,0.795,Dic,1.349,Feb,0.809,1.666,-74.354,-73.879,81.125
+América Del Centro,0.805,Dic,1.413,Feb,0.74,1.909,-74.431,-75.593,66.007
+América Del Norte,0.882,Jul,1.323,Sep,0.639,2.069,-74.144,-65.092,139.303
+Europa,0.88,Nov,1.25,Jun,0.669,1.868,-71.83,-73.036,124.798
+La Aurora,0.874,Dic,1.278,Sep,0.809,1.58,-72.812,-62.513,80.219
+Valle Nuevo,0.421,Dic,1.362,Feb,0.666,2.046,-80.719,-84.179,71.682
+San Cristóbal,0.706,Dic,1.504,Sep,0.679,2.216,-72.566,-81.982,90.226
