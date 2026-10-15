@@ -1,3 +1,133 @@
 % Responsable: Fernando Rueda
 \section{Bloques 4 y 5: modelos, pronóstico y recomendaciones}
 
+Las métricas de esta sección son las que reportamos en los dos cuadernos de modelado del
+Laboratorio 1, el de regiones y el de fronteras. Los modelos se
+entrenaron con enero de 2009 a marzo de 2021 y se evaluaron con abril de 2021 a junio de 2026,
+63 meses. El bloque 4 muestra la serie total, que es la que resume el país y la que un directivo
+necesita anticipar.
+
+\subsection{Bloque 4, izquierda: duelo de modelos}
+
+\paragraph{Qué hay que comunicar.} En el laboratorio comparamos seis algoritmos, suavizamiento
+exponencial simple, Holt-Winters, Holt-Winters amortiguado, seasonal naive, SARIMA y Prophet, con
+dos formas de evaluar. En la primera cada modelo pronostica los 63 meses de prueba de una sola
+vez, y todos fallan, porque aprendieron un entrenamiento que termina en el piso de la pandemia y
+proyectan esa caída hacia adelante. En la segunda el modelo se actualiza cada mes con el dato
+real y pronostica solo el mes siguiente, que es como se usaría en la práctica. El hallazgo para
+el directivo no es cuál algoritmo gana por poco, sino que un pronóstico solo sirve si se
+actualiza.
+
+\begin{center}
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+Evaluación & Modelo & MAE & RMSE & AIC \\
+\midrule
+63 meses de una vez & Suavizamiento exponencial simple & 158\,777 & 173\,709 & -- \\
+                    & Holt-Winters amortiguado         & 170\,053 & 183\,865 & -- \\
+                    & Holt-Winters                     & 178\,392 & 192\,825 & -- \\
+                    & Seasonal naive                   & 207\,322 & 219\,664 & -- \\
+                    & SARIMA                           & 226\,894 & 243\,234 & 64.1 \\
+                    & Prophet                          & 232\,826 & 246\,743 & -- \\
+\midrule
+Un mes adelante     & \textbf{SARIMA (ganador)}        & \textbf{50\,430} & \textbf{80\,789} & 64.1 \\
+                    & Seasonal naive                   & 65\,996 & 93\,379 & -- \\
+\bottomrule
+\end{tabular}
+
+{\footnotesize Serie total, error en visitantes por mes. El SARIMA es el
+SARIMA(0,1,1)(1,1,0)$_{12}$ sobre el logaritmo.}
+\end{center}
+
+\paragraph{Qué métrica se muestra.} El gráfico usa el MAE como medida principal porque está en
+las mismas unidades que la serie y se traduce sin esfuerzo, ``el modelo se equivoca en promedio
+unos 50 mil visitantes por mes''. El RMSE va como cifra secundaria junto a cada barra, porque
+castiga más los errores grandes y muestra que el ganador concentra sus fallos en los meses
+atípicos de la reapertura. El AIC no se grafica. En el laboratorio sirvió para elegir el mejor
+SARIMA entre nueve candidatos, pero no permite comparar modelos de familias distintas ni modelos
+ajustados sobre escalas distintas, y el SARIMA trabaja sobre el logaritmo. Ponerlo junto al MAE
+invitaría a comparar cifras que no son comparables, así que queda en la ficha técnica y en este
+documento.
+
+\paragraph{Tipo de gráfico.} El dato es una métrica numérica para ocho variantes de modelo, una
+variable cuantitativa sobre categorías. Usamos barras horizontales ordenadas de menor a mayor
+error, porque la longitud desde una base común es la comparación más precisa para el ojo y la
+orientación horizontal deja leer el nombre de cada modelo sin girarlo. Las barras parten de cero,
+porque recortar el eje haría que una diferencia de 10\% pareciera del doble. Las barras se separan
+en dos grupos con una línea fina y un rótulo, ``pronóstico de cinco años de golpe'' y
+``actualizado cada mes'', y por color, las del primer grupo en gris claro, la del seasonal naive
+actualizado en azul principal y la del ganador en naranja. La diferencia de longitud entre los
+dos grupos, más de tres veces, es el mensaje y se ve sin leer las cifras.
+
+\paragraph{Cómo se dice en la página.} El título del gráfico enuncia la conclusión, ``Actualizado
+cada mes, el pronóstico erra 3 veces menos''. Debajo, una línea traduce la cifra, el ganador se
+equivoca en unos 50 mil visitantes, alrededor de una quinta parte del promedio mensual de la
+prueba, que fue de 241 mil.
+
+\subsection{Bloque 4, derecha: pronóstico del modelo ganador}
+
+\paragraph{Tipo de gráfico.} Es una serie de tiempo con incertidumbre, así que usamos un gráfico
+de líneas con un abanico. Lo observado va en azul principal y la estimación del SARIMA en naranja,
+con dos bandas del mismo tono, la más oscura para el intervalo del 80\% y la más clara para el del
+95\%. Las bandas se rotulan con la palabra ``Estimación'', como pide el enunciado, y con una
+etiqueta directa que dice qué porcentaje cubre cada una, sin leyenda aparte. Mostrar el intervalo
+es tan importante como mostrar la línea, porque le dice al directivo cuánto puede confiar en el
+número y evita que lea un pronóstico como una certeza.
+
+\paragraph{Qué periodo.} El gráfico muestra el conjunto de prueba, de abril de 2021 a junio de
+2026, con la estimación a un mes adelante, que es exactamente lo que evaluamos en el laboratorio.
+Para responder la segunda mitad de la pregunta del enunciado, qué debemos anticipar, se prolonga
+con línea punteada la estimación de los doce meses siguientes, de julio de 2026 a junio de 2027,
+con el mismo modelo ajustado con toda la serie. Una línea vertical separa lo evaluado de lo
+proyectado, y la parte proyectada lleva su propio rótulo para que no se confunda con un resultado
+validado.
+
+\paragraph{Decisiones para que el gráfico no mienta.} Como el modelo se ajusta sobre el
+logaritmo, la banda es asimétrica, más ancha hacia arriba que hacia abajo, y la dejamos así en
+lugar de dibujar una banda simétrica que no corresponde al modelo. El eje vertical empieza en
+cero. En los meses de la reapertura de 2022 la banda del 95\% se dispara muy por encima del resto
+de la serie, y en lugar de estirar el eje, lo que aplastaría todo el gráfico, se recorta y se
+indica con una nota. Así el lector ve la incertidumbre real de esos meses sin perder la lectura
+del resto.
+
+\subsection{Bloque 5: recomendaciones y ficha técnica}
+
+\paragraph{Formato.} Las recomendaciones van en cuatro tarjetas del mismo tamaño, como en el
+boceto, para que ninguna parezca más importante por su posición y para que se lean de un vistazo.
+Cada tarjeta tiene una acción que empieza con un verbo, en azul principal y negrita, y debajo la
+cifra que la justifica, con el número en naranja. Una recomendación sin evidencia sería una
+opinión, así que la regla es que cada una debe poder rastrearse hasta un gráfico de la página.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}clXl@{}}
+\toprule
+\# & Acción & Evidencia & Bloque \\
+\midrule
+1 & Reportar a los visitantes extranjeros con una serie reconciliada &
+Sin los residentes de Guatemala que dejaron de contarse en 2023, los visitantes de 2025 son el
+138\% de los de 2019, mientras que el total crudo marca 81\%. & 1 y 2 \\
+2 & Programar campañas y operativos con el calendario de cada mercado &
+Centroamérica llena diciembre (1.41), Norteamérica julio (1.32) y Europa noviembre (1.25), cada
+una frente a un mes típico. & 3 \\
+3 & Reforzar los puestos fronterizos con El Salvador &
+San Cristóbal es la serie que más crece, 10.1\% anual en extranjeros entre 2009 y 2025, y la más
+volátil, y Valle Nuevo fue la más golpeada por la pandemia ($-$84\% en 2020 y 2021). & 3 \\
+4 & Actualizar los pronósticos cada mes &
+El mejor pronóstico de una sola vez se equivoca en 159 mil visitantes por mes, el actualizado en
+50 mil. & 4 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+El orden va de lo más urgente a lo más operativo. La primera corrige cómo se lee toda la
+información y por eso va antes que las demás, porque sin ella el directivo creería que el turismo
+no se ha recuperado. La segunda y la tercera usan el diagnóstico del bloque 3, cuándo viene la
+gente y por dónde. La cuarta cierra con el bloque 4 y es la que permite revisar las otras tres
+cada mes.
+
+\paragraph{Ficha técnica.} Va al pie de la página, en el tamaño más pequeño y en gris oscuro,
+porque se consulta pero no compite con el mensaje. Incluye la fuente oficial, Base de Migración
+2009--2026 de INGUAT e IGM, el periodo de enero de 2009 a junio de 2026, la definición de
+visitante como turista más excursionista, el aviso del cambio de metodología de 2023, la
+partición de entrenamiento y prueba de los modelos y los créditos de los autores. También aclara
+que los datos se usan con fines académicos.
