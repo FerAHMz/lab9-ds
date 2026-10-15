@@ -1,3 +1,152 @@
 % Responsable: Fernando Hernández
 \section{Recorrido visual y boceto de la página}
+\label{sec:recorrido}
 
+\subsection{El orden: de lo que pasó a lo que conviene hacer}
+
+La infografía cuenta una historia en cinco pasos, en el mismo orden en que un
+directivo se haría las preguntas:
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{¿Cuál es la situación?} Titular y cuatro cifras clave. Si el
+  lector solo mira esta franja, ya se lleva el mensaje.
+  \item \textbf{¿Cómo llegamos aquí?} La línea de tiempo 2009--2026 con los
+  eventos que explican sus quiebres.
+  \item \textbf{¿Qué se repite cada año y quién viene?} El calendario
+  estacional y el cuadrante comparativo de regiones y puntos de entrada.
+  \item \textbf{¿Qué viene?} El modelo que mejor pronostica y su estimación
+  con rango probable.
+  \item \textbf{¿Qué hacemos?} Recomendaciones para INGUAT y la ficha técnica.
+\end{enumerate}
+
+Es el orden clásico contexto $\rightarrow$ evidencia $\rightarrow$ pronóstico
+$\rightarrow$ acción. La pregunta del enunciado tiene dos mitades, ``qué nos
+enseñan'' y ``qué debemos anticipar'', y la página las responde en ese mismo
+orden: la mitad superior mira hacia atrás y la mitad inferior hacia adelante.
+Las recomendaciones van al final porque solo convencen si el lector ya vio la
+evidencia que las respalda.
+
+\subsection{Patrón de lectura}
+
+La página se lee de arriba hacia abajo en franjas horizontales. Dentro de las
+franjas de dos columnas (bloques 3 y 4), el ojo hace una \textbf{Z}: izquierda,
+derecha y baja a la siguiente franja. Por eso a la izquierda va el gráfico que
+plantea el hallazgo y a la derecha el que lo compara o lo concreta:
+
+\begin{itemize}[leftmargin=*]
+  \item Bloque 3: a la izquierda \emph{cuándo} viene la gente (calendario
+  estacional) y a la derecha \emph{quién} viene y por dónde (cuadrante por serie).
+  \item Bloque 4: a la izquierda \emph{qué modelo} es más confiable y a la
+  derecha \emph{qué pronostica} ese modelo.
+\end{itemize}
+
+Las franjas 1, 2 y 5 ocupan todo el ancho porque cada una es una sola idea: la
+situación, la historia y las acciones.
+
+\subsection{Jerarquía visual}
+
+El peso visual de cada elemento sigue su importancia para la decisión:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Primer nivel:} el titular y las cifras de las tarjetas KPI, en
+  el tamaño de letra más grande de la página.
+  \item \textbf{Segundo nivel:} la línea de tiempo, que ocupa la franja más
+  ancha y alta, porque es el gráfico que le da contexto a todo lo demás.
+  \item \textbf{Tercer nivel:} los gráficos de los bloques 3 y 4, cada uno con
+  su conclusión como título.
+  \item \textbf{Cuarto nivel:} etiquetas de ejes, notas y ficha técnica, en el
+  tamaño mínimo legible.
+\end{itemize}
+
+El color de acento se reserva para lo que el lector tiene que ver primero dentro
+de cada gráfico: la caída de 2020, el mes pico, el modelo ganador y la zona de
+estimación. Esto se desarrolla en la sección 4.
+
+\subsection{Boceto}
+
+La figura~\ref{fig:boceto} muestra la distribución de la página en el lienzo A3
+vertical. Las proporciones son las del lienzo final (11 $\times$ 17 pulgadas).
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    caja/.style={draw=black!45, fill=black!4, rounded corners=1.5pt},
+    kpi/.style={draw=black!45, fill=white, rounded corners=1.5pt},
+    txt/.style={font=\scriptsize, align=center, text=black!80},
+    num/.style={font=\footnotesize\bfseries, text=black!55},
+    flecha/.style={-latex, thick, black!35, dashed}
+]
+% Lienzo 11 x 17 a escala 0.6
+\draw[black!70] (0,0) rectangle (6.6,10.2);
+
+% Bloque 1: titular y KPIs
+\node[txt, font=\small\bfseries] at (3.3,9.75) {Titular estratégico};
+\node[txt] at (3.3,9.42) {Subtítulo: 17 años de flujo migratorio y lo que viene};
+\foreach \i in {0,1,2,3} {
+  \draw[kpi] (0.3+\i*1.53,8.25) rectangle (1.68+\i*1.53,9.05);
+  \node[txt, font=\footnotesize\bfseries] at (0.99+\i*1.53,8.75) {KPI};
+  \node[txt, font=\tiny] at (0.99+\i*1.53,8.45) {cifra grande};
+}
+\node[num] at (6.4,9.75) {1};
+
+% Bloque 2: panorama histórico
+\draw[caja] (0.3,5.75) rectangle (6.3,8.0);
+\node[txt] at (3.3,7.6) {\textbf{Panorama histórico 2009--2026}};
+\node[txt] at (3.3,7.25) {Línea de tiempo con eventos anotados};
+\draw[black!55, thick] (0.6,6.15) -- (1.4,6.35) -- (2.2,6.55) -- (3.0,6.75) -- (3.4,6.85)
+      -- (3.6,6.05) -- (3.9,6.1) -- (4.3,6.6) -- (5.1,6.65) -- (5.9,6.7);
+\node[txt, font=\tiny] at (3.6,5.92) {COVID-19};
+\node[num] at (6.4,8.0) {2};
+
+% Bloque 3: estacionalidad y cuadrante
+\draw[caja] (0.3,3.45) rectangle (3.2,5.5);
+\node[txt] at (1.75,4.8) {\textbf{Calendario}\\\textbf{estacional}\\[2pt]heatmap mes $\times$ año\\+ fechas clave};
+\draw[caja] (3.4,3.45) rectangle (6.3,5.5);
+\node[txt] at (4.85,4.8) {\textbf{Cuadrante}\\\textbf{comparativo}\\[2pt]7 series $\times$\\4 preguntas};
+\node[num] at (6.4,5.5) {3};
+
+% Bloque 4: modelos y pronóstico
+\draw[caja] (0.3,1.65) rectangle (3.2,3.2);
+\node[txt] at (1.75,2.75) {\textbf{Duelo de modelos}\\[2pt]error (MAE, RMSE)};
+\draw[caja] (3.4,1.65) rectangle (6.3,3.2);
+\node[txt] at (4.85,2.6) {\textbf{Pronóstico}\\[2pt]con banda\\``Estimación''};
+\node[num] at (6.4,3.2) {4};
+
+% Bloque 5: recomendaciones y ficha
+\foreach \i in {0,1,2,3} {
+  \draw[kpi] (0.3+\i*1.53,0.5) rectangle (1.68+\i*1.53,1.4);
+  \node[txt, font=\tiny] at (0.99+\i*1.53,0.95) {Acción \the\numexpr\i+1\relax};
+}
+\node[txt, font=\tiny, text=black!55] at (3.3,0.22) {Ficha técnica: fuente INGUAT/IGM, método y autores};
+\node[num] at (6.4,1.4) {5};
+
+% Recorrido en Z por las franjas de dos columnas
+\draw[flecha] (1.0,3.7) -- (5.6,3.7) -- (1.0,1.85) -- (5.6,1.85);
+\end{tikzpicture}
+\caption{Boceto de la infografía. Los números marcan los cinco bloques y la
+línea punteada el recorrido en Z por las franjas de dos columnas.}
+\label{fig:boceto}
+\end{figure}
+
+\subsection{Proporción del espacio}
+
+La altura del lienzo se reparte según cuánto aporta cada bloque a la respuesta:
+
+\begin{center}
+\begin{tabular}{@{}lcl@{}}
+\toprule
+Bloque & Altura aproximada & Motivo \\
+\midrule
+1. Titular y KPIs          & 20\% & Es lo que se lee primero y a veces lo único \\
+2. Panorama histórico      & 22\% & Contexto de todo lo demás; necesita ancho para 17 años \\
+3. Estacionalidad y series & 22\% & Dos gráficos con detalle mensual y por serie \\
+4. Modelos y pronóstico    & 18\% & El pronóstico necesita espacio; la comparación es compacta \\
+5. Recomendaciones y ficha & 18\% & Texto breve en tarjetas y la fuente al pie \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Entre bloques se deja un margen blanco constante en lugar de bordes o líneas
+divisorias. El espacio en blanco basta para separar los grupos y no agrega tinta
+que no lleve información.

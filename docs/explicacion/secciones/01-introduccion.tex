@@ -1,3 +1,62 @@
 % Responsable: Fernando Hernández
 \section{Introducción y público objetivo}
 
+En el Laboratorio 1 analizamos el ingreso mensual de viajeros internacionales a
+Guatemala entre enero de 2009 y junio de 2026: 210 meses de la Base de Migración
+de INGUAT/IGM. Construimos siete series de visitantes (turistas más
+excursionistas): el total del país, las tres regiones de origen con más viajeros
+(América del Centro, América del Norte y Europa) y los tres puntos de entrada con
+más flujo (Aeropuerto La Aurora, Valle Nuevo y San Cristóbal). Sobre ellas hicimos
+descomposiciones, pruebas de estacionariedad, modelos ARIMA, Holt-Winters,
+suavizamiento exponencial y Prophet, y medimos el error de cada modelo.
+
+Ese trabajo responde preguntas técnicas. La infografía tiene que responder una
+sola pregunta de negocio:
+
+\begin{center}
+\itshape ¿Qué nos enseñan 17 años de datos migratorios sobre el turismo en
+Guatemala y qué debemos anticipar hacia el futuro?
+\end{center}
+
+\subsection{Para quién es}
+
+El lector es un directivo de INGUAT. Conoce el sector turístico, decide sobre
+presupuesto de promoción, campañas y coordinación con Migración, pero no es
+estadístico. De eso salen tres condiciones de diseño que se aplican en toda la
+pieza:
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Cada gráfico tiene que tener una conclusión escrita.} El título de
+  cada visualización es la conclusión (``Diciembre recibe 35\% más visitantes que
+  un mes típico'') y no la descripción (``Visitantes por mes'').
+  \item \textbf{Nada de vocabulario técnico sin traducir.} ``Fuerza estacional''
+  se lee como ``qué tan predecible es el calendario de la serie''; ``RMSE'' como
+  ``error típico del pronóstico, en visitantes por mes''; ``intervalo de
+  confianza'' como ``rango probable'', rotulado ``Estimación''.
+  \item \textbf{Las cifras se dan en unidades que el lector usa.} Visitantes,
+  millones de visitantes por año y porcentajes respecto a 2019, el último año
+  normal antes de la pandemia, en lugar de logaritmos, diferencias o índices sin
+  referencia.
+\end{enumerate}
+
+\subsection{Del laboratorio a la infografía}
+
+No todo lo que hicimos en el Laboratorio 1 entra en la infografía. Usamos este
+criterio: entra lo que cambia una decisión. Las pruebas ADF y las funciones de
+autocorrelación justifican los modelos, pero el directivo no decide nada con
+ellas, así que se quedan fuera. La tendencia, el calendario de picos, el golpe de
+la pandemia, qué modelo pronostica mejor y cuánto se equivoca sí cambian
+decisiones, y cada uno tiene un bloque.
+
+La medida es siempre la misma: visitantes por mes. Es la única agregación
+comparable en los 210 meses, porque la base cambia de metodología a mitad del
+periodo. Usar una sola unidad en toda la página evita que el lector compare
+cifras que no son comparables.
+
+\subsection{Cómo está organizado este documento}
+
+La sección~\ref{sec:recorrido} explica el orden de los bloques y el recorrido de
+lectura, con el boceto de la página. Las secciones 3 a 5 justifican, bloque por
+bloque, el tipo de gráfico elegido según el tipo de dato, la paleta y la
+tipografía. La sección 6 presenta el cuadrante comparativo con las cifras que
+lo respaldan.
