@@ -1,3 +1,125 @@
 % Responsable: Fernando Rueda
 \section{Paleta de color y tipografía}
+\label{sec:paleta}
 
+\definecolor{azulprincipal}{HTML}{16365C}
+\definecolor{azulsecundario}{HTML}{5B8DB8}
+\definecolor{grisoscuro}{HTML}{5F6A75}
+\definecolor{grisclaro}{HTML}{C9D1D9}
+\definecolor{acento}{HTML}{E07A1F}
+\definecolor{acentotexto}{HTML}{B4500E}
+\newcommand{\muestra}[1]{\textcolor{#1}{\rule{1.6em}{0.85em}}}
+
+\subsection{La paleta}
+
+La infografía usa dos azules temáticos, dos grises de apoyo y un solo color de acento. Es el
+máximo que permite el enunciado, dos o tres colores principales y uno de acento, y nos obliga a
+que cada color signifique siempre lo mismo en toda la página.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}llX@{}}
+\toprule
+Color & Código & Qué representa \\
+\midrule
+\muestra{azulprincipal} Azul principal & \#16365C & El dato observado y la información central, la media móvil de la
+línea de tiempo, los títulos y las cifras de las tarjetas. \\
+\muestra{azulsecundario} Azul secundario & \#5B8DB8 & Series de apoyo dentro de un mismo gráfico y la vía aérea. \\
+\muestra{grisoscuro} Gris oscuro & \#5F6A75 & La serie mensual cruda, los subtítulos y las notas. \\
+\muestra{grisclaro} Gris claro & \#C9D1D9 & Lo que es referencia y no foco, como los modelos descartados y las
+series que no responden la pregunta del cuadrante. \\
+\muestra{acento} Naranja de acento & \#E07A1F & Lo que el lector debe ver primero dentro de cada gráfico, la caída de
+2020, el mes pico, la serie que responde cada pregunta, el modelo ganador y la zona de
+estimación. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Por qué estos colores}
+
+La elección parte de la teoría del color. El azul es un color frío, que se asocia con
+estabilidad, confianza y seriedad, por eso es el color de buena parte de las instituciones
+públicas y es adecuado para una pieza dirigida a un directivo de INGUAT. Lo usamos para todo lo
+que es dato observado, lo que ya pasó y está medido. Los dos azules forman un esquema análogo,
+tonos vecinos de la misma familia, que permite distinguir una serie principal de una secundaria
+sin que compitan entre sí.
+
+El naranja es el complementario del azul, está en el lado opuesto del círculo cromático, y esa
+oposición produce el mayor contraste de tono posible, así que el ojo lo encuentra antes que
+cualquier otro elemento. Además es un color cálido, que comunica alerta y movimiento frente a la
+calma del azul. Por eso lo reservamos para lo excepcional o incierto, el colapso de la pandemia,
+los picos de temporada y la estimación del futuro. Si el naranja apareciera en elementos
+decorativos perdería ese poder, por eso no se usa en fondos, bordes ni títulos.
+
+Los grises son neutros y no compiten por atención. Sirven para el contexto, como la serie
+mensual cruda debajo de la media móvil o las barras de los modelos que no ganaron, y dejan que
+el lector compare sin que el contexto se lleve la mirada.
+
+En el mapa de calor del bloque 3 usamos una escala secuencial de un solo tono, del blanco al
+azul principal, porque el número de visitantes es una cantidad que solo crece en un sentido.
+Mantener el mismo azul de la paleta conecta ese gráfico con el resto de la página, y una escala
+de varios colores inventaría saltos que los datos no tienen.
+
+\subsection{Contraste y legibilidad en pantalla}
+
+Como el medio de difusión es digital, revisamos el contraste de cada color contra el fondo
+blanco con el criterio WCAG 2.1, que pide al menos 4.5 a 1 para texto normal y 3 a 1 para texto
+grande o elementos gráficos.
+
+\begin{center}
+\begin{tabular}{@{}lcl@{}}
+\toprule
+Color sobre blanco & Contraste & Uso permitido \\
+\midrule
+Texto principal \#1F2933 & 14.8:1 & Todo el texto \\
+Azul principal \#16365C & 12.2:1 & Texto de cualquier tamaño y gráficos \\
+Gris oscuro \#5F6A75 & 5.5:1 & Texto de cualquier tamaño \\
+Naranja para texto \#B4500E & 5.1:1 & Texto de cualquier tamaño \\
+Azul secundario \#5B8DB8 & 3.5:1 & Solo líneas, barras y texto grande \\
+Naranja de acento \#E07A1F & 3.0:1 & Solo líneas, barras, áreas y cifras grandes \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+El naranja de acento y el azul secundario no alcanzan el mínimo para texto pequeño, así que los
+usamos solo en elementos gráficos y en cifras grandes. Para las etiquetas pequeñas en naranja
+creamos una variante más oscura del mismo tono, \#B4500E, que mantiene el significado del acento
+y sí cumple el contraste. Una ventaja adicional del par azul y naranja es que se distingue en las
+formas más comunes de daltonismo, la deuteranopía y la protanopía, a diferencia de las
+combinaciones de rojo y verde. Además el significado nunca depende solo del color, cada elemento
+en naranja lleva también una etiqueta escrita.
+
+\subsection{Tipografía}
+
+Usamos una sola familia sin serifa, Helvetica Neue, con Arial como respaldo. Las fuentes sin
+serifa se leen mejor en pantalla porque sus trazos no se deshacen a tamaños pequeños, y una sola
+familia evita que la página se vea como un collage. La jerarquía se construye con tamaño y peso,
+no con fuentes distintas, y sigue los cuatro niveles definidos en la sección~\ref{sec:recorrido}.
+
+\begin{center}
+\begin{tabular}{@{}llcl@{}}
+\toprule
+Nivel & Elemento & Tamaño en A3 & Peso \\
+\midrule
+1 & Titular & 30 pt & Negrita \\
+1 & Cifras de las tarjetas KPI & 32 pt & Negrita \\
+2 & Subtítulo & 14 pt & Regular \\
+3 & Título de cada bloque y de cada gráfico & 13 pt & Negrita \\
+3 & Texto de las tarjetas y recomendaciones & 10.5 pt & Regular \\
+4 & Etiquetas de ejes y anotaciones & 9 pt & Regular \\
+4 & Ficha técnica & 7.5 pt & Regular \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+El tamaño mínimo es de 7.5 puntos y solo para la ficha técnica, que se consulta pero no se lee
+de corrido. El lienzo digital se exporta a 150 puntos por pulgada, 1650 por 2550 píxeles, por
+encima del mínimo de 1200 por 2400 que pide el enunciado, y a esa resolución el texto más pequeño
+mide unos 16 píxeles de alto, legible en pantalla sin hacer zoom. Los
+títulos de los gráficos no describen el gráfico sino que enuncian su conclusión, por ejemplo
+``Diciembre recibe 35\% más visitantes que un mes típico'' en lugar de ``Índice estacional por
+mes'', porque un directivo lee los títulos y no siempre los ejes.
+
+Por último eliminamos todo lo que no lleva información. No hay bordes alrededor de los gráficos,
+ni marcos superiores o derechos, ni fondos de color, ni efectos tridimensionales, y las líneas
+de cuadrícula son grises muy claras y solo horizontales. Los únicos fondos son paneles gris muy
+claro que agrupan las tarjetas, que ayudan a leerlas como un conjunto.
