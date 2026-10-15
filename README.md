@@ -16,7 +16,7 @@ y documento que explica las decisiones de diseño detrás de ella.
 
 ```
 lab9-ds/
-├── data/raw/              # series del Lab 1 (mensuales, train y test), no se modifican
+├── data/raw/              # series del Lab 1 (mensuales, train y test) y visitantes anuales por residencia
 ├── src/                   # scripts que calculan las cifras de la infografía
 ├── outputs/               # tablas y figuras generadas por los scripts
 └── docs/explicacion/      # documento de explicación en LaTeX
@@ -28,6 +28,7 @@ lab9-ds/
 |---------|-------------|-----------|
 | `src/metricas_estacionalidad_pandemia.py` | Hernández | Fuerza estacional, perfil mensual y caída por pandemia de las 7 series |
 | `src/metricas_tendencia_volatilidad.py` | Rueda | Crecimiento y volatilidad de las 7 series |
+| `src/extraer_residencia.py` | Rueda | Separa residentes de Guatemala y extranjeros por serie y año (cambio de metodología de 2023) |
 | `docs/explicacion/secciones/01–03` | Hernández | Introducción, recorrido visual, bloques 1–3 |
 | `docs/explicacion/secciones/04–05` | Rueda | Paleta y tipografía, bloques 4–5 |
 | `docs/explicacion/secciones/06` | Ambos | Cuadrante comparativo |

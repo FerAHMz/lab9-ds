@@ -1,0 +1,127 @@
+serie,anio,residentes_gt,extranjeros
+total,2009,650683.0,1229500.0
+total,2010,693639.0,1311145.0
+total,2011,717712.0,1362002.0
+total,2012,721106.0,1418435.0
+total,2013,845737.0,1443966.0
+total,2014,991888.0,1668290.0
+total,2015,1129942.0,1787944.0
+total,2016,1194556.0,1802471.0
+total,2017,1323495.0,1984156.0
+total,2018,1538243.0,2255517.0
+total,2019,1703440.0,2428811.0
+total,2020,507773.0,551997.0
+total,2021,436841.0,662123.0
+total,2022,1415335.0,1813994.0
+total,2023,0.0,2917827.0
+total,2024,0.0,3274436.0
+total,2025,0.0,3352289.0
+total,2026,0.0,1576619.0
+region: América Del Centro,2009,650683.0,621358.0
+region: América Del Centro,2010,693639.0,664368.0
+region: América Del Centro,2011,717712.0,735265.0
+region: América Del Centro,2012,721106.0,759818.0
+region: América Del Centro,2013,845737.0,754049.0
+region: América Del Centro,2014,991888.0,920889.0
+region: América Del Centro,2015,1129942.0,1002739.0
+region: América Del Centro,2016,1194556.0,1051449.0
+region: América Del Centro,2017,1323495.0,1184591.0
+region: América Del Centro,2018,1538243.0,1388122.0
+region: América Del Centro,2019,1703440.0,1544243.0
+region: América Del Centro,2020,507773.0,322624.0
+region: América Del Centro,2021,436841.0,318097.0
+region: América Del Centro,2022,1415335.0,1034243.0
+region: América Del Centro,2023,0.0,1926018.0
+region: América Del Centro,2024,0.0,2115335.0
+region: América Del Centro,2025,0.0,2143694.0
+region: América Del Centro,2026,0.0,926638.0
+region: América Del Norte,2009,0.0,414601.0
+region: América Del Norte,2010,0.0,444371.0
+region: América Del Norte,2011,0.0,428583.0
+region: América Del Norte,2012,0.0,456995.0
+region: América Del Norte,2013,0.0,472354.0
+region: América Del Norte,2014,0.0,497632.0
+region: América Del Norte,2015,0.0,522684.0
+region: América Del Norte,2016,0.0,491592.0
+region: América Del Norte,2017,0.0,520981.0
+region: América Del Norte,2018,0.0,579367.0
+region: América Del Norte,2019,0.0,602557.0
+region: América Del Norte,2020,0.0,155795.0
+region: América Del Norte,2021,0.0,264889.0
+region: América Del Norte,2022,0.0,533316.0
+region: América Del Norte,2023,0.0,683245.0
+region: América Del Norte,2024,0.0,804778.0
+region: América Del Norte,2025,0.0,839380.0
+region: América Del Norte,2026,0.0,447690.0
+region: Europa,2009,0.0,112190.0
+region: Europa,2010,0.0,113357.0
+region: Europa,2011,0.0,108607.0
+region: Europa,2012,0.0,107429.0
+region: Europa,2013,0.0,112213.0
+region: Europa,2014,0.0,129383.0
+region: Europa,2015,0.0,130435.0
+region: Europa,2016,0.0,125387.0
+region: Europa,2017,0.0,138994.0
+region: Europa,2018,0.0,145520.0
+region: Europa,2019,0.0,141238.0
+region: Europa,2020,0.0,39787.0
+region: Europa,2021,0.0,36380.0
+region: Europa,2022,0.0,124741.0
+region: Europa,2023,0.0,145871.0
+region: Europa,2024,0.0,166630.0
+region: Europa,2025,0.0,176262.0
+region: Europa,2026,0.0,94848.0
+frontera: La Aurora,2009,440716.0,491357.0
+frontera: La Aurora,2010,453152.0,518610.0
+frontera: La Aurora,2011,447506.0,505735.0
+frontera: La Aurora,2012,433496.0,534378.0
+frontera: La Aurora,2013,443961.0,550450.0
+frontera: La Aurora,2014,493966.0,596172.0
+frontera: La Aurora,2015,526635.0,638369.0
+frontera: La Aurora,2016,573083.0,679556.0
+frontera: La Aurora,2017,575347.0,735474.0
+frontera: La Aurora,2018,631155.0,780428.0
+frontera: La Aurora,2019,676991.0,804711.0
+frontera: La Aurora,2020,198054.0,204794.0
+frontera: La Aurora,2021,349559.0,358473.0
+frontera: La Aurora,2022,647067.0,741334.0
+frontera: La Aurora,2023,0.0,984552.0
+frontera: La Aurora,2024,0.0,1142624.0
+frontera: La Aurora,2025,0.0,1188605.0
+frontera: La Aurora,2026,0.0,643675.0
+frontera: Valle Nuevo,2009,65287.0,321447.0
+frontera: Valle Nuevo,2010,78075.0,330283.0
+frontera: Valle Nuevo,2011,84272.0,341494.0
+frontera: Valle Nuevo,2012,67803.0,344085.0
+frontera: Valle Nuevo,2013,181288.0,345758.0
+frontera: Valle Nuevo,2014,236417.0,463793.0
+frontera: Valle Nuevo,2015,282179.0,503540.0
+frontera: Valle Nuevo,2016,227400.0,374746.0
+frontera: Valle Nuevo,2017,302766.0,501879.0
+frontera: Valle Nuevo,2018,311994.0,594565.0
+frontera: Valle Nuevo,2019,319042.0,656251.0
+frontera: Valle Nuevo,2020,65072.0,122970.0
+frontera: Valle Nuevo,2021,18239.0,102318.0
+frontera: Valle Nuevo,2022,216124.0,406262.0
+frontera: Valle Nuevo,2023,0.0,602959.0
+frontera: Valle Nuevo,2024,0.0,703432.0
+frontera: Valle Nuevo,2025,0.0,699114.0
+frontera: Valle Nuevo,2026,0.0,272189.0
+frontera: San Cristóbal,2009,42039.0,78702.0
+frontera: San Cristóbal,2010,46091.0,98887.0
+frontera: San Cristóbal,2011,49031.0,118310.0
+frontera: San Cristóbal,2012,54948.0,114618.0
+frontera: San Cristóbal,2013,54761.0,115268.0
+frontera: San Cristóbal,2014,73749.0,121590.0
+frontera: San Cristóbal,2015,90567.0,142882.0
+frontera: San Cristóbal,2016,73106.0,238515.0
+frontera: San Cristóbal,2017,97857.0,207504.0
+frontera: San Cristóbal,2018,154615.0,232794.0
+frontera: San Cristóbal,2019,176574.0,231358.0
+frontera: San Cristóbal,2020,58740.0,53172.0
+frontera: San Cristóbal,2021,8040.0,27052.0
+frontera: San Cristóbal,2022,137657.0,145448.0
+frontera: San Cristóbal,2023,0.0,268747.0
+frontera: San Cristóbal,2024,0.0,332799.0
+frontera: San Cristóbal,2025,0.0,368060.0
+frontera: San Cristóbal,2026,0.0,170153.0
