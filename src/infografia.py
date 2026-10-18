@@ -44,7 +44,9 @@ T_TITULAR, T_KPI, T_SUBTITULO = 30, 32, 14
 T_BLOQUE, T_TEXTO, T_ETIQUETA, T_FICHA = 13, 10.5, 9, 7.5
 
 _disponibles = {f.name for f in font_manager.fontManager.ttflist}
-FUENTE = next((f for f in ("Helvetica Neue", "Helvetica", "Arial") if f in _disponibles),
+# Arial y no Helvetica Neue: en macOS esta ultima viene en un .ttc y matplotlib no
+# encuentra su negrita, asi que toda la jerarquia por peso se perderia.
+FUENTE = next((f for f in ("Arial", "Liberation Sans", "Helvetica") if f in _disponibles),
               "DejaVu Sans")
 plt.rcParams.update({
     "font.family": FUENTE, "font.size": T_ETIQUETA, "text.color": TEXTO,
@@ -103,8 +105,124 @@ def bloque_3_estacionalidad_cuadrante(fig):
     pendiente(fig, 3, "calendario estacional y cuadrante comparativo")
 
 
+# Metricas de la serie total en la prueba del Lab 1 (abr-2021 a jun-2026), cuadernos de
+# modelado: nombre, MAE, RMSE, si se actualiza cada mes. Seccion 5 del documento.
+MODELOS = [
+    ("Suavizamiento exp. simple", 158_777, 173_709, False),
+    ("Holt-Winters amortiguado", 170_053, 183_865, False),
+    ("Holt-Winters", 178_392, 192_825, False),
+    ("Seasonal naive", 207_322, 219_664, False),
+    ("SARIMA", 226_894, 243_234, False),
+    ("Prophet", 232_826, 246_743, False),
+    ("Seasonal naive", 65_996, 93_379, True),
+    ("SARIMA (ganador)", 50_430, 80_789, True),
+]
+FIN_ENTRENAMIENTO = "2021-03"
+
+
+def pronostico_ganador():
+    """
+    SARIMA(0,1,1)(1,1,0)12 sobre el logaritmo, el modelo elegido para la serie total en
+    el Lab 1. Devuelve la estimacion a un mes adelante sobre la prueba con sus bandas de
+    80 y 95 %, y la estimacion de los 12 meses siguientes con el modelo ajustado a toda
+    la serie.
+    """
+    import warnings
+
+    import numpy as np
+    from statsmodels.tsa.statespace.sarimax import SARIMAX
+
+    warnings.filterwarnings("ignore")
+    total = (pd.read_csv(DATOS / "series_mensuales.csv", parse_dates=["fecha"])
+             .set_index("fecha")["total"].asfreq("MS"))
+    orden = dict(order=(0, 1, 1), seasonal_order=(1, 1, 0, 12))
+    ajuste = SARIMAX(np.log(total[:FIN_ENTRENAMIENTO]), **orden).fit(disp=False)
+    prueba = total.index[total.index > FIN_ENTRENAMIENTO][0]
+    pred = ajuste.apply(np.log(total)).get_prediction(start=prueba)
+    futuro = SARIMAX(np.log(total), **orden).fit(disp=False).get_forecast(12)
+    return {
+        "observado": total,
+        "estimacion": np.exp(pred.predicted_mean),
+        "ic80": np.exp(pred.conf_int(alpha=0.20)),
+        "ic95": np.exp(pred.conf_int(alpha=0.05)),
+        "futuro": np.exp(futuro.predicted_mean),
+        "futuro80": np.exp(futuro.conf_int(alpha=0.20)),
+    }
+
+
 def bloque_4_modelos_pronostico(fig):
-    pendiente(fig, 4, "duelo de modelos y pronóstico")
+    import matplotlib.dates as mdates
+    import numpy as np
+
+    abajo, arriba = FRANJAS[4]
+    titulo_bloque(fig, 4, "¿Qué viene? El pronóstico solo sirve si se actualiza", arriba - 0.018)
+
+    # izquierda: duelo de modelos, barras desde cero ordenadas por grupo
+    ax = fig.add_axes([0.235, abajo + 0.058, 0.19, arriba - abajo - 0.108])
+    y = np.arange(len(MODELOS))[::-1]
+    for yi, (nombre, mae, rmse, actualizado) in zip(y, MODELOS):
+        ganador = "ganador" in nombre
+        color = ACENTO if ganador else (AZUL if actualizado else GRIS_CLARO)
+        ax.barh(yi, mae / 1000, color=color, height=0.68)
+        ax.text(mae / 1000 + 4, yi, f"{mae / 1000:.0f} mil", va="center", fontsize=T_ETIQUETA,
+                color=ACENTO_TXT if ganador else TEXTO, weight="bold" if ganador else "normal")
+    ax.set_yticks(y, [m[0] for m in MODELOS], fontsize=T_ETIQUETA)
+    ax.set_xlim(0, 290)
+    ax.set_xticks([])
+    ax.spines[["left", "bottom"]].set_visible(False)
+    ax.tick_params(left=False)
+    ax.axhline(1.5, color=GRIS_OSCURO, lw=0.6)
+    ax.text(290, 7.55, "Pronóstico de 5 años de una vez", ha="right", fontsize=T_ETIQUETA - 0.5,
+            color=GRIS_OSCURO, style="italic")
+    ax.text(290, 1.35, "Actualizado cada mes", ha="right", va="top", fontsize=T_ETIQUETA - 0.5,
+            color=AZUL, style="italic")
+    ax.set_title("Actualizado cada mes, el pronóstico erra 3 veces menos",
+                 fontsize=T_TEXTO, weight="bold", color=AZUL, loc="right", pad=10)
+    fig.text(MARGEN, abajo + 0.012,
+             "Error promedio por mes (MAE), total de visitantes, abr-2021 a jun-2026. El ganador erra\n"
+             "unos 50 mil por mes (RMSE 81 mil). Sin actualizarse, todos arrastran el colapso de 2020.",
+             fontsize=T_ETIQUETA, color=GRIS_OSCURO, linespacing=1.3)
+
+    # derecha: pronostico del ganador con abanico rotulado como estimacion
+    p = pronostico_ganador()
+    ax = fig.add_axes([0.53, abajo + 0.058, 1 - MARGEN - 0.53, arriba - abajo - 0.108])
+    obs = p["observado"]["2021-01":] / 1000
+    ax.fill_between(p["ic95"].index, p["ic95"].iloc[:, 0] / 1000, p["ic95"].iloc[:, 1] / 1000,
+                    color=ACENTO, alpha=0.14, lw=0)
+    ax.fill_between(p["ic80"].index, p["ic80"].iloc[:, 0] / 1000, p["ic80"].iloc[:, 1] / 1000,
+                    color=ACENTO, alpha=0.28, lw=0)
+    ax.fill_between(p["futuro80"].index, p["futuro80"].iloc[:, 0] / 1000,
+                    p["futuro80"].iloc[:, 1] / 1000, color=ACENTO, alpha=0.28, lw=0)
+    ax.plot(p["estimacion"].index, p["estimacion"] / 1000, color=ACENTO, lw=1.6)
+    ax.plot(p["futuro"].index, p["futuro"] / 1000, color=ACENTO, lw=1.8, ls="--")
+    ax.plot(obs.index, obs, color=AZUL, lw=2)
+    corte = p["observado"].index[-1] + pd.Timedelta(days=15)
+    ax.axvline(corte, color=GRIS_OSCURO, lw=0.7, ls=":")
+    techo = 700
+    ax.set_ylim(0, techo)
+    ax.xaxis.set_major_locator(mdates.YearLocator())
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+    ax.tick_params(labelsize=T_ETIQUETA)
+    ax.grid(axis="y", color=GRIS_CLARO, lw=0.5)
+    ax.text(pd.Timestamp("2021-02-01"), techo * 0.92, "Observado", color=AZUL,
+            fontsize=T_ETIQUETA, weight="bold")
+    ax.text(pd.Timestamp("2023-04-01"), techo * 0.92, "Estimación a un mes", color=ACENTO_TXT,
+            fontsize=T_ETIQUETA, weight="bold")
+    ax.text(pd.Timestamp("2023-04-01"), techo * 0.88,
+            "rango probable 80 % oscuro, 95 % claro\nen 2022 supera la escala",
+            color=ACENTO_TXT, fontsize=T_ETIQUETA - 1, linespacing=1.2, va="top")
+    ax.text(corte + pd.Timedelta(days=20), techo * 0.64, "Estimación\njul-26 a jun-27",
+            color=ACENTO_TXT, fontsize=T_ETIQUETA - 0.5, weight="bold", linespacing=1.15,
+            bbox=dict(facecolor="white", edgecolor="none", alpha=0.85, pad=1.5))
+    ax.set_title("El modelo ganador sigue la temporada (miles de visitantes)",
+                 fontsize=T_TEXTO, weight="bold", color=AZUL, loc="left", pad=10)
+
+    real = p["observado"][p["estimacion"].index]
+    dentro = ((real >= p["ic80"].iloc[:, 0]) & (real <= p["ic80"].iloc[:, 1])).mean()
+    fig.text(0.53, abajo + 0.012,
+             f"El rango del 80 % contuvo {100 * dentro:.0f} de cada 100 meses reales. Para los próximos 12\n"
+             f"meses se estiman unos {p['futuro'].sum() / 1e6:.1f} millones de visitantes, con picos en julio y diciembre.",
+             fontsize=T_ETIQUETA, color=GRIS_OSCURO, linespacing=1.3)
 
 
 def bloque_5_recomendaciones(fig):
