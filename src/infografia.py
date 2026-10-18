@@ -130,7 +130,64 @@ def bloque_1_titular_kpis(fig):
 
 
 def bloque_2_panorama(fig):
-    pendiente(fig, 2, "panorama histórico 2009–2026")
+    """
+    Linea de tiempo del total: el mes crudo en gris y el promedio de 12 meses en azul,
+    con solo los eventos que respaldan los datos o el codebook (seccion 3).
+    """
+    import matplotlib.dates as mdates
+
+    abajo, arriba = FRANJAS[2]
+    titulo_bloque(fig, 2, "¿Cómo llegamos aquí? 17 años de visitantes", arriba - 0.018)
+
+    total = (pd.read_csv(DATOS / "series_mensuales.csv", parse_dates=["fecha"])
+             .set_index("fecha")["total"] / 1000)
+    promedio = total.rolling(12).mean()
+    fecha = pd.Timestamp
+    techo = 540
+
+    ax = fig.add_axes([MARGEN + 0.04, abajo + 0.022, 1 - 2 * MARGEN - 0.05, arriba - abajo - 0.075])
+    ax.axvspan(fecha("2023-01-01"), fecha("2026-12-31"), color=PANEL, lw=0, zorder=0)
+    ax.plot(total[:"2025-12"], color=GRIS_OSCURO, lw=0.8)
+    ax.plot(total["2025-12":], color=GRIS_OSCURO, lw=0.8, ls=(0, (1, 1.5)))
+    ax.plot(promedio, color=AZUL, lw=2.4)
+    ax.plot(total["2020-04":"2020-08"], color=ACENTO, lw=3)
+
+    ax.set_ylim(0, techo)
+    ax.set_xlim(fecha("2008-10-01"), fecha("2026-12-31"))
+    ax.set_yticks([0, 100, 200, 300, 400, 500], ["0", "100 mil", "200 mil", "300 mil", "400 mil", "500 mil"])
+    ax.xaxis.set_major_locator(mdates.YearLocator())
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+    ax.tick_params(labelsize=T_ETIQUETA)
+    ax.grid(axis="y", color=GRIS_CLARO, lw=0.5)
+    ax.set_title("Una década de crecimiento, un colapso en 2020 y una recuperación que la base "
+                 "subestima desde 2023 (visitantes por mes)",
+                 fontsize=T_TEXTO, weight="bold", color=AZUL, loc="left", pad=8)
+
+    # etiquetas directas de las dos lineas
+    ax.text(fecha("2009-02-01"), 245, "Cada mes", color=GRIS_OSCURO, fontsize=T_ETIQUETA)
+    ax.text(fecha("2012-01-01"), 95, "Promedio de 12 meses", color=AZUL, fontsize=T_ETIQUETA,
+            weight="bold")
+
+    # eventos
+    anual = total.groupby(total.index.year).sum()
+    ax.text(fecha("2011-06-01"), 400,
+            f"2009–2019: de {anual[2009] / 1000:.2f} a {anual[2019] / 1000:.2f}\nmillones de visitantes al año",
+            color=AZUL, fontsize=T_ETIQUETA, linespacing=1.25)
+    pico = total[:"2019-12"].idxmax()
+    ax.annotate(f"Récord: {total[pico]:.0f} mil\n(dic-2019)", xy=(pico, total[pico]),
+                xytext=(fecha("2016-09-01"), 490), fontsize=T_ETIQUETA, color=TEXTO,
+                ha="right", va="center", linespacing=1.2,
+                arrowprops=dict(arrowstyle="-", color=GRIS_OSCURO, lw=0.7))
+    cierre = 100 * (total["2020-04":"2020-08"].sum() / total["2019-04":"2019-08"].sum() - 1)
+    ax.text(fecha("2020-01-01"), 45, f"Abr–ago 2020: fronteras cerradas,\n−{abs(cierre):.0f} % frente a 2019",
+            color=ACENTO_TXT, fontsize=T_ETIQUETA, weight="bold", ha="right", linespacing=1.2)
+    ax.text(fecha("2021-01-01"), 470, "Reapertura\ngradual", color=TEXTO,
+            fontsize=T_ETIQUETA, linespacing=1.2)
+    ax.text(fecha("2023-02-15"), 510,
+            "Desde 2023 la base no cuenta a\nlos residentes de Guatemala:\nniveles no comparables",
+            color=GRIS_OSCURO, fontsize=T_ETIQUETA - 0.5, va="top", linespacing=1.25)
+    ax.text(fecha("2026-02-01"), 110, "Ene–jun\n2026,\nparcial", color=GRIS_OSCURO,
+            fontsize=T_ETIQUETA - 1, linespacing=1.15)
 
 
 def bloque_3_estacionalidad_cuadrante(fig):
