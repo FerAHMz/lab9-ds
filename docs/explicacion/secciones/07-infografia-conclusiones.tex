@@ -1,0 +1,109 @@
+% Responsable: Fernando Hernández
+\section{La infografía final y conclusiones}
+
+\subsection{Resultado}
+
+La figura~\ref{fig:infografia} es la infografía tal como se entrega. Se genera
+completa con \texttt{src/infografia.py} a partir de las tablas de
+\texttt{outputs/}, así que cada cifra de la página se puede rastrear hasta el
+script que la calcula y, desde ahí, hasta las series del Laboratorio 1. Se exporta
+en dos versiones: un PNG de 1650 $\times$ 2550 píxeles (150 ppp), por encima del
+mínimo de 1200 $\times$ 2400, y un PDF vectorial de exactamente una página de
+11 $\times$ 17 pulgadas para impresión.
+
+\begin{figure}[p]
+\centering
+\includegraphics[height=0.9\textheight]{infografia.png}
+\caption{Infografía final.}
+\label{fig:infografia}
+\end{figure}
+
+\subsection{Del boceto a la página}
+
+La página respeta el boceto de la sección~\ref{sec:recorrido}: las cinco franjas,
+sus proporciones y el recorrido en Z por los bloques 3 y 4. Al construirla
+cambiaron cuatro cosas, y cada cambio salió de revisar los datos con más cuidado:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{La anotación de la pandemia.} El borrador decía ``cero
+  visitantes'' en abril--agosto de 2020. Al graficarlo vimos que el total no llega
+  a cero, baja a unos 10 mil al mes; solo América del Norte y Europa marcan cero.
+  La etiqueta final dice $-$97\% frente a los mismos meses de 2019.
+  \item \textbf{El alcance del cambio de metodología.} En el avance creíamos que el
+  quiebre de 2023 solo afectaba al total y a América del Centro. Separar los
+  visitantes por residencia mostró que también afecta a las tres fronteras. Por
+  eso el crecimiento del cuadrante y la primera recomendación usan solo
+  extranjeros.
+  \item \textbf{El orden de las filas del cuadrante.} Pasó de ordenar cada columna
+  de mayor a menor a un orden fijo de series, para que cada serie se pueda seguir
+  a lo largo de las cuatro preguntas.
+  \item \textbf{La respuesta de estacionalidad.} Se marcan dos series en acento,
+  América del Norte y Europa, porque la diferencia entre ellas es de 0.002.
+\end{itemize}
+
+\subsection{Cómo responde la página a lo que pide el enunciado}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+Requisito & Dónde se cumple \\
+\midrule
+Titular periodístico y subtítulo & Bloque 1: ``Guatemala recupera a sus viajeros: los
+mercados lejanos ya superan 2019''. \\
+3 a 4 tarjetas KPI & Bloque 1: cuatro cifras de 32 pt con su línea de contexto. \\
+Línea temporal con eventos & Bloque 2: récord de 2019, cierre de 2020, reapertura,
+cambio de metodología de 2023 y semestre parcial de 2026. \\
+Estacionalidad y fechas que marcan la pauta & Bloque 3, izquierda: mapa de calor con
+Semana Santa, vacaciones y bono 14, fin de año y aguinaldo. \\
+Cuadrante comparativo & Bloque 3, derecha: las cuatro preguntas con la serie que
+responde cada una en acento. \\
+Comparación de modelos & Bloque 4, izquierda: MAE de ocho variantes, con el RMSE del
+ganador en la nota. \\
+Pronóstico con intervalo rotulado ``Estimación'' & Bloque 4, derecha: bandas del 80\% y
+95\% sobre la prueba y doce meses proyectados. \\
+3 a 5 recomendaciones & Bloque 5: cuatro acciones, cada una con su cifra de respaldo. \\
+Ficha técnica y créditos & Pie: fuente INGUAT/IGM, periodo, definiciones, partición de
+los modelos y autores. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Verificaciones para que los gráficos no mientan}
+
+\begin{itemize}[leftmargin=*]
+  \item Todos los ejes de cantidades empiezan en cero: la línea de tiempo, las
+  barras de modelos, las del cuadrante y el pronóstico.
+  \item Cada columna del cuadrante tiene su propia escala y su unidad escrita en
+  el encabezado, para que nadie compare barras de preguntas distintas.
+  \item Las cifras afectadas por el cambio de metodología se calculan sin ese
+  quiebre (solo extranjeros) o se marcan en la página.
+  \item Lo que no es dato observado, la estimación y el semestre parcial, se
+  distingue con línea punteada y rótulo propio.
+  \item Las fechas del calendario se presentan como coincidencias con los picos y
+  no como causas, porque el laboratorio midió el patrón y no su causa.
+\end{itemize}
+
+\subsection{Conclusiones}
+
+La pregunta del enunciado tiene dos mitades, y la infografía las responde así.
+
+\paragraph{Qué nos enseñan 17 años de datos.} El turismo hacia Guatemala creció de
+forma sostenida entre 2009 y 2019, de 1.88 a 4.13 millones de visitantes al año, y
+lo hizo con un calendario muy estable: diciembre, Semana Santa y julio se repiten
+cada año. La pandemia lo frenó por completo en 2020, y las fronteras terrestres
+con El Salvador fueron las que más tardaron en volver. La lectura más importante
+es la que no se ve en el total crudo: contando solo extranjeros, en 2025 llegaron
+138 visitantes por cada 100 de 2019. El turismo no está rezagado; la base dejó de
+contar a una parte de los viajeros.
+
+\paragraph{Qué debemos anticipar.} El modelo ganador estima unos 3.3 millones de
+visitantes entre julio de 2026 y junio de 2027, con picos en julio y diciembre.
+Pero el resultado más útil del bloque 4 no es esa cifra, sino que un pronóstico
+solo sirve si se actualiza cada mes: así se equivoca tres veces menos.
+San Cristóbal es la serie que más crece y la menos predecible, así que es donde
+el pronóstico y la capacidad operativa necesitan más margen.
+
+\paragraph{Sobre el diseño.} Cada decisión de la página sale de un principio de
+la teoría vista en clase o de una revisión de los datos. Por eso el documento y la
+infografía cuentan la misma historia: el contexto lleva a la evidencia, la
+evidencia al pronóstico y el pronóstico a la acción.

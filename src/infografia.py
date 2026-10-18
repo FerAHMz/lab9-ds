@@ -82,16 +82,6 @@ def titulo_bloque(fig, numero, texto, y):
     fig.text(MARGEN + 0.025, y, texto, fontsize=T_BLOQUE, weight="bold", color=AZUL)
 
 
-def pendiente(fig, numero, nombre):
-    """Reserva la franja de un bloque que todavia no se dibuja."""
-    abajo, arriba = FRANJAS[numero]
-    fig.patches.append(mpatches.Rectangle(
-        (MARGEN, abajo + 0.008), 1 - 2 * MARGEN, arriba - abajo - 0.016,
-        transform=fig.transFigure, fill=False, ls="--", lw=0.8, edgecolor=GRIS_CLARO))
-    fig.text(0.5, (abajo + arriba) / 2, f"Bloque {numero}: {nombre}", ha="center",
-             va="center", fontsize=T_TEXTO, color=GRIS_OSCURO)
-
-
 # ------------------------------------------------------------------ bloques
 def tarjetas_kpi():
     """Cifra, color y contexto de cada tarjeta, leidos de outputs/kpis.csv (seccion 3)."""

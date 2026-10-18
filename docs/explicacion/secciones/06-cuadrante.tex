@@ -5,8 +5,11 @@
 \subsection{Estacionalidad y golpe de la pandemia}
 
 \paragraph{Formato.} El cuadrante es una tabla visual de 7 series por 4 preguntas.
-Cada columna lleva una barra horizontal por serie, ordenada de mayor a menor, con
-la cifra escrita al final de la barra. La serie que responde la pregunta va en
+Cada columna lleva una barra horizontal por serie con la cifra escrita al final de
+la barra. Las filas mantienen el mismo orden en las cuatro columnas (el país, las
+tres regiones y las tres fronteras, separadas por líneas finas) para que el lector
+pueda seguir una serie de izquierda a derecha; ordenar cada columna por separado
+obligaría a buscar el nombre de nuevo en cada pregunta. La serie que responde la pregunta va en
 color de acento y las demás en gris. Elegimos barras porque son la forma más
 precisa de comparar magnitudes de una misma variable entre categorías: el ojo
 compara longitudes desde una base común mejor que áreas, ángulos o colores. Cada
@@ -50,22 +53,27 @@ igual a todas las series, porque el cierre fue general; sumar 2021 captura
 también qué tan lenta fue la reapertura de cada una.
 
 \begin{center}
-\begin{tabular}{@{}lccc@{}}
+\begin{tabular}{@{}lcccc@{}}
 \toprule
-Serie & Caída 2020 & Caída 2020--2021 & 2025 vs. 2019 \\
+ & & & \multicolumn{2}{c}{2025 frente a 2019} \\
+\cmidrule(l){4-5}
+Serie & Caída 2020 & Caída 2020--2021 & Base cruda & Solo extranjeros \\
 \midrule
-\textbf{Valle Nuevo} & \textbf{$-$81\%} & \textbf{$-$84\%} & 72\% \\
-San Cristóbal        & $-$73\% & $-$82\% & 90\% \\
-América del Centro   & $-$74\% & $-$76\% & 66\%$^{*}$ \\
-Total                & $-$74\% & $-$74\% & 81\%$^{*}$ \\
-Europa               & $-$72\% & $-$73\% & 125\% \\
-América del Norte    & $-$74\% & $-$65\% & 139\% \\
-La Aurora            & $-$73\% & $-$63\% & 80\% \\
+\textbf{Valle Nuevo} & \textbf{$-$81\%} & \textbf{$-$84\%} & 72\%$^{*}$ & 107\% \\
+San Cristóbal        & $-$73\% & $-$82\% & 90\%$^{*}$  & 159\% \\
+América del Centro   & $-$74\% & $-$76\% & 66\%$^{*}$  & 139\% \\
+Total                & $-$74\% & $-$74\% & 81\%$^{*}$  & 138\% \\
+Europa               & $-$72\% & $-$73\% & 125\%       & 125\% \\
+América del Norte    & $-$74\% & $-$65\% & 139\%       & 139\% \\
+La Aurora            & $-$73\% & $-$63\% & 80\%$^{*}$  & 148\% \\
 \bottomrule
 \end{tabular}
 
 {\footnotesize $^{*}$ Afectadas por el cambio de metodología de 2023, que deja de
-contar a los residentes de Guatemala.}
+contar a los residentes de Guatemala. En la versión del avance solo marcamos el
+total y América del Centro; la separación por residencia de la subsección
+siguiente mostró que las tres fronteras también lo están. Las caídas de 2020 y
+2021 no cambian, porque ambos años son anteriores al quiebre.}
 \end{center}
 
 \emph{Respuesta:} Valle Nuevo, la frontera terrestre con El Salvador. Es la que
@@ -73,7 +81,8 @@ más cae con las dos medidas. Las dos fronteras terrestres encabezan la lista
 porque siguieron casi vacías en 2021, mientras que La Aurora y América del Norte,
 que dependen de vuelos, se recuperaron antes. Para la infografía es un hallazgo
 que conecta con las recomendaciones: la vía terrestre es la más vulnerable a un
-cierre.
+cierre. Contando solo extranjeros, Valle Nuevo ya superó su nivel de 2019 (107\%),
+pero sigue siendo la serie que menos se ha recuperado.
 
 % ---------- Fernando Rueda ----------
 \subsection{Tendencia de crecimiento y volatilidad}

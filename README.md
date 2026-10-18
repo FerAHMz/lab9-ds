@@ -33,6 +33,7 @@ lab9-ds/
 | `docs/explicacion/secciones/01–03` | Hernández | Introducción, recorrido visual, bloques 1–3 |
 | `docs/explicacion/secciones/04–05` | Rueda | Paleta y tipografía, bloques 4–5 |
 | `docs/explicacion/secciones/06` | Ambos | Cuadrante comparativo |
+| `docs/explicacion/secciones/07` | Hernández | Infografía final, verificaciones y conclusiones |
 
 ## Cómo correrlo
 
