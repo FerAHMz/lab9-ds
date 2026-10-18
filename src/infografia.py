@@ -190,8 +190,125 @@ def bloque_2_panorama(fig):
             fontsize=T_ETIQUETA - 1, linespacing=1.15)
 
 
+MESES = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+NOMBRES = {"Total": "Total país", "América Del Centro": "Centroamérica",
+           "América Del Norte": "Norteamérica", "Europa": "Europa", "La Aurora": "La Aurora (aéreo)",
+           "Valle Nuevo": "Valle Nuevo", "San Cristóbal": "San Cristóbal"}
+
+
+def heatmap_estacional(fig, rect):
+    """Mapa de calor mes x anio del total, escala secuencial blanco -> azul principal."""
+    from matplotlib.colors import LinearSegmentedColormap
+
+    total = (pd.read_csv(DATOS / "series_mensuales.csv", parse_dates=["fecha"])
+             .set_index("fecha")["total"] / 1000)
+    tabla = (total.to_frame("v").assign(anio=total.index.year, mes=total.index.month)
+             .pivot(index="anio", columns="mes", values="v"))
+    perfil = pd.read_csv(SALIDAS / "perfil_mensual.csv", index_col="mes")["Total"]
+    anios = list(tabla.index)
+
+    escala = LinearSegmentedColormap.from_list("azules", ["#FFFFFF", AZUL_2, AZUL])
+    escala.set_bad("white")
+    ax = fig.add_axes(rect)
+    im = ax.imshow(tabla, cmap=escala, vmin=0, vmax=450, aspect="auto")
+    ax.set_xticks(range(12), MESES, fontsize=T_ETIQUETA)
+    visibles = [2009, 2012, 2015, 2018, 2020, 2023, 2026]
+    ax.set_yticks([anios.index(a) for a in visibles], visibles, fontsize=T_ETIQUETA)
+    ax.tick_params(length=0)
+    ax.spines[["left", "bottom"]].set_visible(False)
+
+    # diciembre, el mes pico, enmarcado en acento
+    ax.add_patch(mpatches.Rectangle((10.5, -0.5), 1, len(tabla), fill=False,
+                                    edgecolor=ACENTO, lw=2, clip_on=False))
+    # fechas que coinciden con los picos, sobre sus columnas, con su indice estacional
+    techo = rect[1] + rect[3]
+    for x, rotulo, mes in [(2.5, "Semana Santa", "Mar"), (6, "Vacaciones · bono 14", "Jul"),
+                           (11, "Fin de año\n· aguinaldo", "Dic")]:
+        x_fig = rect[0] + (x + 0.5) / 12 * rect[2]
+        fig.text(x_fig, techo + 0.013, rotulo, ha="center", va="bottom",
+                 fontsize=T_ETIQUETA - 1, color=TEXTO, linespacing=1.1)
+        fig.text(x_fig, techo + 0.003, f"+{100 * (perfil[mes] - 1):.0f} %", ha="center",
+                 va="bottom", fontsize=T_ETIQUETA, weight="bold",
+                 color=ACENTO_TXT if mes == "Dic" else AZUL)
+    # quiebre metodologico entre 2022 y 2023
+    fila_2023 = anios.index(2023) - 0.5
+    ax.axhline(fila_2023, color=TEXTO, lw=0.9, ls="--", clip_on=False, xmax=1.0)
+    ax.text(11.65, fila_2023, " cambio de\n conteo", fontsize=T_ETIQUETA - 1.5, color=GRIS_OSCURO,
+            va="center", ha="left", linespacing=1.1)
+
+    barra = fig.add_axes([rect[0], rect[1] - 0.03, rect[2] * 0.45, 0.005])
+    cb = fig.colorbar(im, cax=barra, orientation="horizontal", ticks=[0, 150, 300, 450])
+    cb.ax.tick_params(length=0, labelsize=T_ETIQUETA - 1)
+    cb.outline.set_visible(False)
+    fig.text(rect[0] + rect[2] * 0.47, rect[1] - 0.0275, "mil visitantes al mes",
+             fontsize=T_ETIQUETA - 1, color=GRIS_OSCURO, va="center")
+
+
+def cuadrante(fig, x0, abajo, ancho, alto):
+    """
+    Tabla visual de 7 series x 4 preguntas: una columna de barras por pregunta, cada una
+    con su propia escala, y la serie que responde en acento (seccion 6).
+    """
+    estacional = pd.read_csv(SALIDAS / "metricas_estacionalidad_pandemia.csv", index_col="serie")
+    tendencia = pd.read_csv(SALIDAS / "metricas_tendencia_volatilidad.csv", index_col="serie")
+    orden = list(NOMBRES)
+    columnas = [
+        ("¿Más\nestacional?", "índice 0 a 1",
+         estacional["fuerza_estacional"], "{:.2f}", ["América Del Norte", "Europa"]),
+        ("¿Más\ncrecimiento?", "% anual",
+         tendencia["crecimiento_extranjeros_2009_2025_pct"], "{:.1f} %", None),
+        ("¿Más\nvolátil?", "% de su nivel",
+         100 * tendencia["cv_residuo"], "{:.0f} %", None),
+        ("¿Más golpeada\npor la pandemia?", "caída 2020–21",
+         -estacional["caida_2020_2021_pct"], "−{:.0f} %", None),
+    ]
+    etiquetas = 0.1
+    ancho_col = (ancho - etiquetas) / 4
+    y = list(range(len(orden)))[::-1]
+    for i, (pregunta, unidad, valores, formato, ganadoras) in enumerate(columnas):
+        valores = valores[orden]
+        ganadoras = ganadoras or [valores.idxmax()]
+        ax = fig.add_axes([x0 + etiquetas + i * ancho_col, abajo, ancho_col - 0.01, alto])
+        colores = [ACENTO if s in ganadoras else GRIS_CLARO for s in orden]
+        ax.barh(y, valores, color=colores, height=0.62)
+        tope = valores.max()
+        for yi, s, v in zip(y, orden, valores):
+            gana = s in ganadoras
+            ax.text(v + tope * 0.05, yi, formato.format(v), va="center", fontsize=T_ETIQUETA - 0.5,
+                    color=ACENTO_TXT if gana else TEXTO, weight="bold" if gana else "normal")
+        ax.set_xlim(0, tope * 1.9)
+        ax.set_ylim(-0.6, len(orden) - 0.4)
+        ax.set_xticks([])
+        ax.set_yticks(y, [NOMBRES[s] for s in orden] if i == 0 else [], fontsize=T_ETIQUETA)
+        ax.tick_params(left=False)
+        ax.spines[["left", "bottom"]].set_visible(False)
+        for corte in (5.5, 2.5):
+            ax.axhline(corte, color=GRIS_CLARO, lw=0.5)
+        izq = x0 + etiquetas + i * ancho_col
+        fig.text(izq, abajo + alto + 0.013, pregunta, fontsize=T_ETIQUETA, weight="bold",
+                 color=AZUL, va="bottom", linespacing=1.1)
+        fig.text(izq, abajo + alto + 0.003, unidad, fontsize=T_ETIQUETA - 1,
+                 color=GRIS_OSCURO, va="bottom")
+
+
 def bloque_3_estacionalidad_cuadrante(fig):
-    pendiente(fig, 3, "calendario estacional y cuadrante comparativo")
+    abajo, arriba = FRANJAS[3]
+    titulo_bloque(fig, 3, "¿Qué se repite cada año y quién viene?", arriba - 0.018)
+    titulo_y = arriba - 0.042
+
+    fig.text(MARGEN, titulo_y, "Diciembre recibe 35 % más visitantes\nque un mes típico",
+             fontsize=T_TEXTO, weight="bold", color=AZUL, va="top", linespacing=1.25)
+    heatmap_estacional(fig, [MARGEN + 0.04, abajo + 0.045, 0.33, arriba - abajo - 0.14])
+
+    x0 = 0.5
+    fig.text(x0, titulo_y, "San Cristóbal crece más y es la menos predecible;\n"
+             "Valle Nuevo fue la más golpeada por la pandemia",
+             fontsize=T_TEXTO, weight="bold", color=AZUL, va="top", linespacing=1.25)
+    cuadrante(fig, x0, abajo + 0.045, 1 - MARGEN - x0, arriba - abajo - 0.14)
+    fig.text(x0, abajo + 0.012,
+             "Estacionalidad y volatilidad medidas en 2009–2019. Crecimiento anual de 2009 a 2025\n"
+             "contando solo extranjeros, sin el cambio de conteo de 2023.",
+             fontsize=T_ETIQUETA - 0.5, color=GRIS_OSCURO, linespacing=1.3)
 
 
 # Metricas de la serie total en la prueba del Lab 1 (abr-2021 a jun-2026), cuadernos de
