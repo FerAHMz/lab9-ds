@@ -225,8 +225,67 @@ def bloque_4_modelos_pronostico(fig):
              fontsize=T_ETIQUETA, color=GRIS_OSCURO, linespacing=1.3)
 
 
+def recomendaciones():
+    """Cada accion con la cifra que la respalda, leida de las tablas de outputs/."""
+    tendencia = pd.read_csv(SALIDAS / "metricas_tendencia_volatilidad.csv", index_col="serie")
+    pandemia = pd.read_csv(SALIDAS / "metricas_estacionalidad_pandemia.csv", index_col="serie")
+    perfil = pd.read_csv(SALIDAS / "perfil_mensual.csv", index_col="mes")
+    ganador = next(m for m in MODELOS if "ganador" in m[0])[1]
+    mejor_estatico = min(m[1] for m in MODELOS if not m[3])
+    extranjeros = tendencia.loc["Total", "extranjeros_2025_vs_2019_pct"]
+    crudo = pandemia.loc["Total", "recuperacion_2025_pct"]
+    sc = tendencia.loc["San Cristóbal", "crecimiento_extranjeros_2009_2025_pct"]
+    vn = pandemia.loc["Valle Nuevo", "caida_2020_2021_pct"]
+
+    def pico(serie, mes):
+        return 100 * (perfil.loc[mes, serie] - 1)
+
+    return [
+        ("Reportar a los visitantes\nextranjeros por separado", f"{extranjeros:.0f} %",
+         f"de 2019 alcanzan en 2025 sin los\nresidentes de Guatemala. El total\n"
+         f"crudo, {crudo:.0f} %, oculta la recuperación."),
+        ("Lanzar campañas con el\ncalendario de cada mercado", "Dic · Jul · Nov",
+         f"Centroamérica +{pico('América Del Centro', 'Dic'):.0f} % en diciembre,\n"
+         f"Norteamérica +{pico('América Del Norte', 'Jul'):.0f} % en julio,\n"
+         f"Europa +{pico('Europa', 'Nov'):.0f} % en noviembre."),
+        ("Reforzar las fronteras\ncon El Salvador", f"+{sc:.1f} % al año",
+         f"crecen los extranjeros por San\nCristóbal, la serie más volátil. Valle\n"
+         f"Nuevo cayó {abs(vn):.0f} % en 2020 y 2021."),
+        ("Actualizar el pronóstico\ncada mes", f"{mejor_estatico / ganador:.0f} veces menos",
+         f"error, {ganador / 1000:.0f} mil visitantes al mes frente\na {mejor_estatico / 1000:.0f} mil "
+         "del mejor pronóstico\nque no se actualiza."),
+    ]
+
+
 def bloque_5_recomendaciones(fig):
-    pendiente(fig, 5, "recomendaciones y ficha técnica")
+    abajo, arriba = FRANJAS[5]
+    titulo_bloque(fig, 5, "¿Qué hacemos? Cuatro acciones para INGUAT", arriba - 0.018)
+
+    separacion = 0.014
+    ancho = (1 - 2 * MARGEN - 3 * separacion) / 4
+    base, alto = abajo + 0.04, arriba - abajo - 0.075
+    for i, (accion, cifra, contexto) in enumerate(recomendaciones()):
+        x = MARGEN + i * (ancho + separacion)
+        panel(fig, x, base, ancho, alto)
+        izq, techo = x + 0.012, base + alto
+        fig.text(izq, techo - 0.016, str(i + 1), fontsize=T_BLOQUE, weight="bold", color=ACENTO)
+        fig.text(izq + 0.022, techo - 0.012, accion, fontsize=T_TEXTO, weight="bold",
+                 color=AZUL, va="top", linespacing=1.2)
+        fig.text(izq, techo - 0.046, cifra, fontsize=T_SUBTITULO + 3, weight="bold",
+                 color=ACENTO_TXT, va="top")
+        fig.text(izq, techo - 0.066, contexto, fontsize=T_ETIQUETA, color=TEXTO,
+                 va="top", linespacing=1.3)
+
+    fig.add_artist(plt.Line2D([MARGEN, 1 - MARGEN], [abajo + 0.031, abajo + 0.031],
+                              color=GRIS_CLARO, lw=0.8, transform=fig.transFigure))
+    fig.text(MARGEN, abajo + 0.027,
+             "Fuente: Base de Migración 2009–2026 (enero 2009 a junio 2026), INGUAT / IGM. Visitantes = turistas + "
+             "excursionistas. Desde 2023 la base no cuenta a los residentes de Guatemala que regresan al país.\n"
+             "Modelos entrenados con enero 2009 a marzo 2021 y evaluados con abril 2021 a junio 2026. Estacionalidad, "
+             "tendencia y volatilidad medidas sobre 2009–2019.\n"
+             "Autores: Fernando Hernández (23645) y Fernando Rueda (23748). CC3084 Data Science, Universidad del Valle "
+             "de Guatemala, 2026. Datos de uso académico, no publicar.",
+             fontsize=T_FICHA, color=GRIS_OSCURO, va="top", linespacing=1.4)
 
 
 def main() -> None:

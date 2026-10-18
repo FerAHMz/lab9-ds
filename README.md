@@ -29,6 +29,7 @@ lab9-ds/
 | `src/metricas_estacionalidad_pandemia.py` | Hernández | Fuerza estacional, perfil mensual y caída por pandemia de las 7 series |
 | `src/metricas_tendencia_volatilidad.py` | Rueda | Crecimiento y volatilidad de las 7 series |
 | `src/extraer_residencia.py` | Rueda | Separa residentes de Guatemala y extranjeros por serie y año (cambio de metodología de 2023) |
+| `src/infografia.py` | Ambos | Infografía de una página: base, paleta y bloques 4–5 (Rueda), bloques 1–3 (Hernández) |
 | `docs/explicacion/secciones/01–03` | Hernández | Introducción, recorrido visual, bloques 1–3 |
 | `docs/explicacion/secciones/04–05` | Rueda | Paleta y tipografía, bloques 4–5 |
 | `docs/explicacion/secciones/06` | Ambos | Cuadrante comparativo |
@@ -49,6 +50,15 @@ pip install -r requirements.txt
 
 Cada script de `src/` se corre desde la raíz del repo, por ejemplo
 `python src/metricas_estacionalidad_pandemia.py`, y escribe en `outputs/`.
+
+La infografía usa las tablas de los demás scripts, así que va al final:
+
+```bash
+python src/metricas_estacionalidad_pandemia.py
+python src/kpis_titular.py
+python src/metricas_tendencia_volatilidad.py
+python src/infografia.py   # outputs/infografia.png (1650 x 2550) e infografia.pdf (A3)
+```
 
 El documento se compila desde `docs/explicacion/`:
 
