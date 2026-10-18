@@ -93,8 +93,40 @@ def pendiente(fig, numero, nombre):
 
 
 # ------------------------------------------------------------------ bloques
+def tarjetas_kpi():
+    """Cifra, color y contexto de cada tarjeta, leidos de outputs/kpis.csv (seccion 3)."""
+    k = pd.read_csv(SALIDAS / "kpis.csv", index_col="kpi")["valor"]
+    return [
+        (f"{k['record_2019_millones']:.2f} M", AZUL,
+         "visitantes en 2019,\nel año más alto de la serie"),
+        (f"−{abs(k['caida_2020_pct']):.0f} %", ACENTO,
+         "cayó el flujo en 2020 por el\ncierre de fronteras (COVID-19)"),
+        (f"+{k['norteamerica_2025_vs_2019_pct']:.0f} %", AZUL,
+         f"Norteamérica en 2025 frente a\n2019 (Europa, +{k['europa_2025_vs_2019_pct']:.0f} %)"),
+        (f"+{k['diciembre_sobre_mes_tipico_pct']:.0f} %", AZUL,
+         "más visitantes en diciembre\nque en un mes típico"),
+    ]
+
+
 def bloque_1_titular_kpis(fig):
-    pendiente(fig, 1, "titular y tarjetas KPI")
+    abajo, arriba = FRANJAS[1]
+    fig.text(MARGEN, arriba - 0.016,
+             "Guatemala recupera a sus viajeros:\nlos mercados lejanos ya superan 2019",
+             fontsize=T_TITULAR, weight="bold", color=AZUL, va="top", linespacing=1.1)
+    fig.text(MARGEN, arriba - 0.077,
+             "Radiografía de 17 años de flujo migratorio (2009–2026) y lo que anticipan los modelos",
+             fontsize=T_SUBTITULO, color=GRIS_OSCURO, va="top")
+
+    separacion = 0.014
+    ancho = (1 - 2 * MARGEN - 3 * separacion) / 4
+    base, alto = abajo + 0.012, 0.085
+    for i, (cifra, color, contexto) in enumerate(tarjetas_kpi()):
+        x = MARGEN + i * (ancho + separacion)
+        panel(fig, x, base, ancho, alto)
+        fig.text(x + 0.014, base + alto - 0.012, cifra, fontsize=T_KPI, weight="bold",
+                 color=color, va="top")
+        fig.text(x + 0.014, base + 0.012, contexto, fontsize=T_TEXTO, color=TEXTO,
+                 va="bottom", linespacing=1.3)
 
 
 def bloque_2_panorama(fig):
